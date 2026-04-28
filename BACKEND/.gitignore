@@ -1,0 +1,14 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore environment variables
+.env
+
+# Ignore OS files
+.DS_Store
+
+# Ignore deployed models/tmp files
+deployed_api/
+*.pkl

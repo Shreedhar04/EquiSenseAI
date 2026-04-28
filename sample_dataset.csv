@@ -1,0 +1,7 @@
+Age,Gender,Race,Income,Occupation,Education
+25,Female,White,50000,Engineer,Bachelors
+34,Male,Hispanic,60000,Teacher,Masters
+?,Female,Black,?,Developer,Bachelors
+42,Non-binary,Asian,80000,Manager,Masters
+55,Male,White,95000,Doctor,PhD
+29,Female,Hispanic,45000,Nurse,Associates
