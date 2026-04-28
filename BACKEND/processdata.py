@@ -36,13 +36,10 @@ def process_dataset(input_data, target_col=None, verbose=True):
 
 
 
-    # Step 2: Validate column names
-    for col in df.columns:
-      if not re.match(r'^[A-Za-z0-9_ ]+$', col):
-            raise ValueError(f"Invalid column name '{col}'")
-
-    # Step 3: Clean column names
+    # Step 2: Sanitize column names
     df.columns = df.columns.str.strip()
+    # Replace any character that is not alphanumeric, space, underscore, or hyphen with an underscore
+    df.columns = df.columns.str.replace(r'[^A-Za-z0-9_ \-]', '_', regex=True)
 
     # Step 4: Clean string values safely
     for col in df.select_dtypes(include='object').columns:
