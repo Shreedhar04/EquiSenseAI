@@ -16,7 +16,7 @@ def get_model(model_name):
 
     elif model_name == "random_forest":
         return RandomForestClassifier(
-             n_estimators=500,
+            n_estimators=100,
             max_depth=None,
             min_samples_split=5,
             min_samples_leaf=2,
