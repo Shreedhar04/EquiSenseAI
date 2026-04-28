@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, Play, CheckCircle2, AlertTriangle, Activity, Bar
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { cn } from './FileUpload';
 
+const API_BASE_URL = import.meta.env.DEV ? "http://127.0.0.1:8000" : "https://equisenseai.onrender.com";
+
 export function StepThree({ 
   onBack, 
   onProceed, 
@@ -36,7 +38,7 @@ export function StepThree({
       formData.append('metrics', selectedCriterion);
       formData.append('sensitive', selectedAttributes.join(','));
 
-      const response = await fetch('http://127.0.0.1:8000/analyze', {
+      const response = await fetch(`${API_BASE_URL}/analyze`, {
         method: 'POST',
         body: formData,
       });

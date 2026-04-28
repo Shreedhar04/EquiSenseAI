@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Loader2, ArrowLeft, Code, TrendingUp, AlertTriangle, CheckCircle2, PlayCircle, Cloud, Server, RefreshCw, Key, Copy } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, Scatter, ScatterChart, ZAxis } from 'recharts';
 
+const API_BASE_URL = import.meta.env.DEV ? "http://127.0.0.1:8000" : "https://equisenseai.onrender.com";
+
 export function StepFour({ onBack, dataset, selectedModel, selectedCriterion, selectedAttributes, onRestart }) {
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +27,7 @@ export function StepFour({ onBack, dataset, selectedModel, selectedCriterion, se
       formData.append("sensitive", selectedAttributes.join(','));
       formData.append("method", selectedMethod);
 
-      const res = await fetch("http://127.0.0.1:8000/generate-api", {
+      const res = await fetch(`${API_BASE_URL}/generate-api`, {
         method: "POST",
         body: formData,
       });
@@ -80,7 +82,7 @@ export function StepFour({ onBack, dataset, selectedModel, selectedCriterion, se
         formData.append("metrics", selectedCriterion);
         formData.append("sensitive", selectedAttributes.join(','));
 
-        const res = await fetch("http://127.0.0.1:8000/mitigate", {
+        const res = await fetch(`${API_BASE_URL}/mitigate`, {
           method: "POST",
           body: formData,
         });
