@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import pandas as pd
 import io
@@ -30,6 +31,94 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    html_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EquiSense AI Backend</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                background-color: #0f172a;
+                color: #f8fafc;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                text-align: center;
+            }
+            .container {
+                background: rgba(30, 41, 59, 0.7);
+                padding: 3rem 4rem;
+                border-radius: 1rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+                max-width: 600px;
+                animation: fadeIn 1s ease-out;
+            }
+            h1 {
+                margin-top: 0;
+                font-size: 2.5rem;
+                background: linear-gradient(to right, #38bdf8, #818cf8);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 1rem;
+            }
+            p {
+                color: #94a3b8;
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
+            }
+            .status {
+                display: inline-flex;
+                align-items: center;
+                background: rgba(16, 185, 129, 0.1);
+                color: #34d399;
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                font-weight: 500;
+                font-size: 0.9rem;
+            }
+            .status-dot {
+                width: 8px;
+                height: 8px;
+                background-color: #34d399;
+                border-radius: 50%;
+                margin-right: 8px;
+                box-shadow: 0 0 8px #34d399;
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0% { opacity: 1; transform: scale(1); }
+                50% { opacity: 0.5; transform: scale(1.2); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>EquiSense AI</h1>
+            <p>The backend API for your unbiased AI decision-making platform is successfully running. It is ready to process datasets, analyze fairness metrics, and mitigate bias.</p>
+            <div class="status">
+                <span class="status-dot"></span> System Online
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    return html_content
 @app.post("/analyze")
 async def analyze_dataset(
     file: UploadFile = File(...),
