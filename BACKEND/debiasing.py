@@ -198,13 +198,8 @@ def apply_threshold_optimizer(
     constraint,
     sample_weights=None
 ):
-    model = clone(model)
-
-    # Train base model
-    if sample_weights is not None:
-        model.fit(X_train_enc, y_train, sample_weight=sample_weights)
-    else:
-        model.fit(X_train_enc, y_train)
+    # The model is already fitted from the pipeline, and ThresholdOptimizer
+    # uses prefit=True, so we don't need to clone and refit it here.
 
     # Apply ThresholdOptimizer
     post_model = ThresholdOptimizer(
