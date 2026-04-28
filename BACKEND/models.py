@@ -6,6 +6,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
+try:
+    from xgboost import XGBClassifier
+    HAS_XGB = True
+except ImportError:
+    HAS_XGB = False
 
 
 def get_model(model_name):
@@ -26,17 +31,15 @@ def get_model(model_name):
         )
 
     elif model_name == "svm":
-        return SVC(probability=True)
+        return SVC(probability=False, max_iter=10000)
 
     elif model_name == "xgboost":
-        try:
-            from xgboost import XGBClassifier
-            return XGBClassifier(
-                eval_metric='logloss',
-                use_label_encoder=False
-            )
-        except ImportError:
+        if not HAS_XGB:
             raise ImportError("XGBoost not installed. Run: pip install xgboost")
+        return XGBClassifier(
+            eval_metric='logloss',
+            use_label_encoder=False
+        )
 
     else:
         raise ValueError("Unsupported model")

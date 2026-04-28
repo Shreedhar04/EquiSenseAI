@@ -151,7 +151,9 @@ async def analyze_dataset(
         model_name = mapping_models.get(model, 'random_forest')
         
         # 4. Train
+        print(f"Starting analysis for model: {model_name}...")
         clf, X_train, X_test, y_train, y_test, y_pred = choosemodel(df, target_col, model_name)
+        print(f"Model {model_name} trained successfully.")
         
         # 5. Performance
         perf = model_performance(y_test, y_pred, verbose=False)
@@ -311,6 +313,7 @@ async def mitigate_dataset(
             }
 
         # 1. Baseline Model
+        print(f"Training baseline model: {model_name} for mitigation...")
         clf_base, X_train, X_test, y_train, y_test, y_pred_base = choosemodel(df, target_col, model_name)
         res_baseline = eval_and_package(y_pred_base, X_test, y_test)
 
